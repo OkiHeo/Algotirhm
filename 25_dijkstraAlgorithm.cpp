@@ -22,7 +22,7 @@ int d[6];			// 최단 거리를 저장
 int getSmallIndex(){
 	int min=INF;
 	int idx = 0;
-	for(int i=0; i<number; i++){
+	for(int i=0; i<number; i++){			// !!!!! 선형탐색으로 진행하므로 시간복잡도가 매우 크다.O(n^n) 
 		if( d[i]<min && !visit[i]){
 			min = d[i];
 			idx = i;
@@ -41,10 +41,11 @@ void dijkstra(int start){
 		int current = getSmallIndex();	// 시작 노드에서 가장 비용이 적게 드는 노드 선택 
 		visit[current] = true;
 		for(int j=0; j<number; j++){
-			// 시작 노드에서 현재 위치를 거쳐서 j까지 가는 것이 시작-j까지보다 적다면 
-			if( d[current]+a[current][j] < d[j] ){
-				d[j] = d[current]+a[current][j];		// 업데이트 
-			}
+			if( !visit[j] )
+				// 시작 노드에서 현재 위치를 거쳐서 j까지 가는 것이 시작-j까지보다 적다면 
+				if( d[current]+a[current][j] < d[j] ){
+					d[j] = d[current]+a[current][j];		// 업데이트 
+				}
 		}
 	}
 } 
